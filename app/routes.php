@@ -21,4 +21,12 @@ return function (App $app) {
         $group->get('/{id}', ViewUserAction::class);
         $group->post('/login', LoginUserAction::class);
     });
+
+    //route for vide related actions: List videos and to get a 
+    //particular video information using a unique video ID
+    $app->group('/videos', function (Group $group) {
+        $group->get('', ListVideoAction::class);
+        $group->get('/{video_id}', ViewVideoAction::class);
+    });
+    
 };

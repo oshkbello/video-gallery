@@ -14,13 +14,11 @@ return function (App $app) {
         return $response;
     });
 
-    $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write('Hello world!');
-        return $response;
-    });
-
+    //route for user related actions: List users, login user, view a particular user given a unique ID
+    // The verb associated to a particular route (GET, POST) is determined by the nature of action.
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
+        $group->post('/login', LoginUserAction::class);
     });
 };

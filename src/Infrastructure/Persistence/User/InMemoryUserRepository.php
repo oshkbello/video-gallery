@@ -49,4 +49,25 @@ class InMemoryUserRepository implements UserRepository
 
         return $this->users[$id];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+
+     //function used by the login action to search for particualar username
+     public function findUserOfUsername(string $username): User
+     {
+         /*
+         * This simply searches for the username in the User array above by first 
+         * decoding it from a JSON object into an array, and 
+         * then encoding the result of the search back into a JSON object to be sent to the nuxt.
+         */
+         $user = array_search($username,array_column(json_decode(json_encode($this->users),TRUE), 'username','id'));
+         if (!$user) {
+             throw new UsernameNotFoundException();
+         }
+ 
+         return $this->users[$user];
+     }
+     
 }

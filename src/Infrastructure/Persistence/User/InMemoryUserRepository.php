@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence\User;
 
 use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
+use App\Domain\User\UsernameNotFoundException;
 use App\Domain\User\UserRepository;
 
 class InMemoryUserRepository implements UserRepository
@@ -55,19 +56,19 @@ class InMemoryUserRepository implements UserRepository
      */
 
      //function used by the login action to search for particualar username
-     public function findUserOfUsername(string $username): User
-     {
-         /*
-         * This simply searches for the username in the User array above by first 
-         * decoding it from a JSON object into an array, and 
-         * then encoding the result of the search back into a JSON object to be sent to the nuxt.
-         */
-         $user = array_search($username,array_column(json_decode(json_encode($this->users),TRUE), 'username','id'));
-         if (!$user) {
-             throw new UsernameNotFoundException();
-         }
- 
-         return $this->users[$user];
-     }
-     
+    public function findUserOfUsername(string $username): User
+    {
+        /*
+        * This simply searches for the username in the User array above by first 
+        * decoding it from a JSON object into an array, and 
+        * then encoding the result of the search back into a JSON object to be sent to the nuxt.
+        */
+        $user = array_search($username,array_column(json_decode(json_encode($this->users),TRUE), 'username','id'));
+        if (!$user) {
+            throw new UsernameNotFoundException();
+        }
+
+        return $this->users[$user];
+    }
+    
 }
